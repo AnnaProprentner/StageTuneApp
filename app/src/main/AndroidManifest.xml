@@ -12,14 +12,24 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme" >
-        <activity android:name=".MainActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        android:theme="@style/StageTune" >
 
-                <category android:name="android.intent.category.LAUNCHER" />
+        <activity android:name=".SplashActivity" android:theme="@style/StageTune">
+            <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".TuneActivity" android:theme="@style/StageTune"
+            android:parentActivityName=".MainActivity">
+
+        </activity>
+
+        <activity android:name=".MainActivity">
+        </activity>
+
+
     </application>
 
 </manifest>

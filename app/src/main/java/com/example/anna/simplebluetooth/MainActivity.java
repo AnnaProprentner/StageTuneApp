@@ -7,18 +7,26 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
 
     Button btnConnect, btnAlive;
+    ListView lvDevices;
+
     private static final UUID PORT_UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
     BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
@@ -35,13 +43,12 @@ public class MainActivity extends AppCompatActivity {
 
         btnConnect = (Button)findViewById(R.id.btnConnect);
         btnAlive = (Button)findViewById(R.id.btnAlive);
-
-
+        lvDevices = (ListView)findViewById(R.id.lvDevices);
 
 
         if (bluetoothAdapter == null) {
 
-            Toast.makeText(getApplicationContext(),"Device doesnt Support Bluetooth",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),"Device does not Support Bluetooth",Toast.LENGTH_SHORT).show();
 
         }
 
@@ -57,15 +64,19 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 ConnectESP();
+                getPairedDevices();
             }
         });
 
         btnAlive.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SendString("I AM ALIVE");
+               // SendString("I AM ALIVE");
+                Intent ii = new Intent(MainActivity.this, TuneActivity.class);
+                startActivity(ii);
             }
         });
+
 
 
     }
@@ -116,5 +127,25 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
+    public void getPairedDevices(){
+        ArrayList list = new ArrayList();
+
+        if(pairedDevices.size()>0){
+            for (BluetoothDevice bd : pairedDevices){
+                list.add(bd.getName() + "\n" + bd.getAddress());
+            }
+        }else{
+            Toast.makeText(getApplicationContext(), "No Paired Bluetooth Devices", Toast.LENGTH_LONG).show();
+        }
+
+        final ArrayAdapter adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,list);
+
+        lvDevices.setAdapter(adapter);
+        //lvDevices.setOnItemClickListener(deviceListClickListener);
+
+    }
+
+
 
 }
