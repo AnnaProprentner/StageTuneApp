@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">SimpleBluetooth</string>
+
+    <string-array name="string_names">
+        <item>E</item>
+        <item>A</item>
+        <item>D</item>
+        <item>G</item>
+        <item>H</item>
+        <item>e</item>
+    </string-array>
+
+
 </resources>

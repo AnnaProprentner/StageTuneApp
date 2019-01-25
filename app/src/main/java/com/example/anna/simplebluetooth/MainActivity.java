@@ -24,7 +24,7 @@ import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button btnConnect, btnAlive;
+    Button btnFreeTune, btnSavedTunes, btnStringUp, btnConnect ;
     ListView lvDevices;
 
     private static final UUID PORT_UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
@@ -41,39 +41,33 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        btnConnect = (Button)findViewById(R.id.btnConnect);
-        btnAlive = (Button)findViewById(R.id.btnAlive);
-        lvDevices = (ListView)findViewById(R.id.lvDevices);
+        btnFreeTune = (Button) findViewById(R.id.btnFreeTune);
+        btnSavedTunes = (Button) findViewById(R.id.btnSavedTunes);
+        btnStringUp = (Button) findViewById(R.id.btnStringUp);
+
+        btnConnect = (Button) findViewById(R.id.btnConnect);
+
+       // lvDevices = (ListView)findViewById(R.id.lvDevices);
 
 
-        if (bluetoothAdapter == null) {
 
-            Toast.makeText(getApplicationContext(),"Device does not Support Bluetooth",Toast.LENGTH_SHORT).show();
-
-        }
-
-        if (!bluetoothAdapter.isEnabled())
-        {
-            //Ask to the user turn the bluetooth on
-            Intent enableAdapter  = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableAdapter ,1);
-        }
 
 
         btnConnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 ConnectESP();
                 getPairedDevices();
             }
         });
 
-        btnAlive.setOnClickListener(new View.OnClickListener() {
+        btnFreeTune.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                // SendString("I AM ALIVE");
-                Intent ii = new Intent(MainActivity.this, TuneActivity.class);
-                startActivity(ii);
+                Intent i2 = new Intent(MainActivity.this, TuneActivity.class);
+                startActivity(i2);
             }
         });
 
@@ -95,8 +89,9 @@ public class MainActivity extends AppCompatActivity {
                 {
 
                     device = iterator; //device is an object of type BluetoothDevice
-
                     found = true;
+
+                    Toast.makeText(getApplicationContext(), "Now Connected", Toast.LENGTH_LONG).show();
 
                     break;
 
@@ -112,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
         }
         try {
             btSocket.connect();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -129,7 +125,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void getPairedDevices(){
-        ArrayList list = new ArrayList();
+
+        if (bluetoothAdapter == null) {
+            Toast.makeText(getApplicationContext(),"Device does not Support Bluetooth",Toast.LENGTH_SHORT).show();
+        }
+
+        if (!bluetoothAdapter.isEnabled()){
+            //Ask to the user turn the bluetooth on
+            Intent enableAdapter  = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableAdapter ,1);
+        }
+
+        final ArrayList list = new ArrayList();
 
         if(pairedDevices.size()>0){
             for (BluetoothDevice bd : pairedDevices){
@@ -141,8 +148,13 @@ public class MainActivity extends AppCompatActivity {
 
         final ArrayAdapter adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,list);
 
-        lvDevices.setAdapter(adapter);
-        //lvDevices.setOnItemClickListener(deviceListClickListener);
+//        lvDevices.setAdapter(adapter);
+//        lvDevices.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+//               Object choosenDevice = list.get(position);
+//            }
+//        });
 
     }
 
