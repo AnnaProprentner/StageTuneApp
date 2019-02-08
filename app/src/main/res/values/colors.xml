@@ -3,5 +3,18 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+
+
+    <color name="Coral_1">#f77266</color>
+    <color name="Coral_2">#f66054</color>
+    <color name="Coral_3">#f54f41</color>
+
+
+
+    <color name="purple_4">#800080</color>
+    <color name="purple_1">#efbbff</color>
+    
+    
+    
     <color name="accent_material_light_1">#9d0707</color>
 </resources>

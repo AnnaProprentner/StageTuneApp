@@ -1,23 +1,21 @@
 package com.example.anna.simplebluetooth;
 
-import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -45,19 +43,22 @@ public class NowTuningActivity extends AppCompatActivity {
     byte[] readBuffer;
     int readBufferPosition;
 
-    EditText edtSend;
-    EditText edtReceive;
+    EditText edtSend, edtReceive;
+
     Button btnStart;
     Spinner spStringSelect;
+
     String selectedString;
-
-    Button btnclose;
-
-    String receivedString;
+    String receivedString ="";
 
     String[] Tune = new String[7];
 
     String message;
+
+    //Popup Window
+     Dialog epicDialog;
+     ImageView imgClosePopupTuning;
+     Button btnReadyPopup;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -77,6 +78,8 @@ public class NowTuningActivity extends AppCompatActivity {
         btnStart = (Button) findViewById(R.id.btnStart);
         spStringSelect = (Spinner) findViewById(R.id.spStringSelect);
 
+        epicDialog = new Dialog(this);
+
         GetPairedDevices();
         ConnectESP();
         ListenForData();
@@ -87,11 +90,14 @@ public class NowTuningActivity extends AppCompatActivity {
 
         spStringSelect.setAdapter(adapter);
 
+
+
+
         btnStart.setOnClickListener(new View.OnClickListener(){
-
-
             @Override
             public void onClick(View view) {
+
+                /*
               message = edtSend.getText().toString();
               selectedString = spStringSelect.getSelectedItem().toString();
 
@@ -109,9 +115,7 @@ public class NowTuningActivity extends AppCompatActivity {
                   SendString("e;");
               }
 
-              showPopupWindow(view);
-              //view.setForeground().setAlpha(220);
-
+               */
 
              /* switch (selectedString){
                   case "E": SendString("E;");
@@ -124,44 +128,54 @@ public class NowTuningActivity extends AppCompatActivity {
               }*/
 
                // SendString(message);
+
+                ShowPopupWindowOne();
+
             }
         });
+
+
 
     }
 
 
-    public void showPopupWindow(View view){
-        LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-        View popupView = inflater.inflate(R.layout.popup_window, null);
+   public void ShowPopupWindowOne(){
+         epicDialog.setContentView(R.layout.popup_window_one);
+         btnReadyPopup = (Button) epicDialog.findViewById(R.id.btnReadyPopUp);
 
-        //TO DO: btnclose = (Button) findViewById(R.layout.btn)
+         btnReadyPopup.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View view) {
+                 //epicDialog.dismiss();
+                 ShowPopupWindowThree();
+             }
+         });
 
-        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+         epicDialog.setCanceledOnTouchOutside(false);
 
-        boolean focus = true;
+         epicDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+         epicDialog.show();
 
-        final PopupWindow popupWindow = new PopupWindow(popupView,width,height,focus);
+    }
+
+    public void ShowPopupWindowThree(){
+        epicDialog.setContentView(R.layout.popup_window_three);
+
+        imgClosePopupTuning = (ImageView) epicDialog.findViewById(R.id.imgClosePopupTuning);
 
 
-
-        //popupView.getForeground().setAlpha(0);
-        popupWindow.showAtLocation(view, Gravity.CENTER,0,0);
-
-
-        if(receivedString.equals("close0")){
-            popupWindow.dismiss();
-        }
-
-/*        // dismiss the popup window when touched
-        popupView.setOnTouchListener(new View.OnTouchListener() {
+        imgClosePopupTuning.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                popupWindow.dismiss();
-                return true;
+            public void onClick(View view) {
+
+                    epicDialog.dismiss();
             }
         });
-*/
+
+        epicDialog.setCanceledOnTouchOutside(false);
+
+        epicDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        epicDialog.show();
     }
 
     public void ConnectESP(){
@@ -175,8 +189,6 @@ public class NowTuningActivity extends AppCompatActivity {
                     device = iterator; //device is an object of type BluetoothDevice
                     found = true;
                     Toast.makeText(getApplicationContext(), "Now Connected", Toast.LENGTH_LONG).show();
-
-
 
                     break;
                 }else{
@@ -293,8 +305,17 @@ public class NowTuningActivity extends AppCompatActivity {
                                         @Override
                                         public void run() {
                                             //edtMessage.setText(data);
-                                            Toast.makeText(getApplicationContext(), data, Toast.LENGTH_SHORT).show();
+                                           receivedString = data;
+                                            //Toast.makeText(getApplicationContext(), receivedString, Toast.LENGTH_SHORT).show();
+
                                             edtReceive.setText(data);
+
+                                            if(receivedString.equals("close")){
+                                                epicDialog.dismiss();
+                                            }
+                                            if(receivedString.equals("start")){
+                                                epicDialog.dismiss();
+                                            }
 
 
                                         }
@@ -318,8 +339,8 @@ public class NowTuningActivity extends AppCompatActivity {
         });
 
         workerThread.start();
-
        // return receivedDataBT[1];
+
     }
 
 }
