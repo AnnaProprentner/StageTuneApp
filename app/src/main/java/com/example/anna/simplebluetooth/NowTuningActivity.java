@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -59,6 +60,7 @@ public class NowTuningActivity extends AppCompatActivity {
      Dialog epicDialog;
      ImageView imgClosePopupTuning;
      Button btnReadyPopup;
+     TextView txtStringToTune;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -97,10 +99,11 @@ public class NowTuningActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                /*
+
               message = edtSend.getText().toString();
               selectedString = spStringSelect.getSelectedItem().toString();
 
+/*
               if(selectedString.equals("E")){
                   SendString("E;");
               }else if(selectedString.equals("A")){
@@ -142,6 +145,9 @@ public class NowTuningActivity extends AppCompatActivity {
    public void ShowPopupWindowOne(){
          epicDialog.setContentView(R.layout.popup_window_one);
          btnReadyPopup = (Button) epicDialog.findViewById(R.id.btnReadyPopUp);
+         txtStringToTune = (TextView) epicDialog.findViewById(R.id.txtStringToTune);
+
+         txtStringToTune.setText(selectedString);
 
          btnReadyPopup.setOnClickListener(new View.OnClickListener() {
              @Override
@@ -155,6 +161,21 @@ public class NowTuningActivity extends AppCompatActivity {
 
          epicDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
          epicDialog.show();
+
+    }
+
+    public void ShowPopupWindowTwo(){
+        epicDialog.setContentView(R.layout.popup_window_two);
+
+        txtStringToTune = (TextView) epicDialog.findViewById(R.id.txtStringToTune);
+
+        txtStringToTune.setText(selectedString);
+
+        epicDialog.setCanceledOnTouchOutside(false);
+
+        epicDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        epicDialog.show();
+
 
     }
 
@@ -176,6 +197,21 @@ public class NowTuningActivity extends AppCompatActivity {
 
         epicDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         epicDialog.show();
+    }
+
+    public void ShowPopupWindowFour(){
+        epicDialog.setContentView(R.layout.popup_window_four);
+
+        txtStringToTune = (TextView) epicDialog.findViewById(R.id.txtStringToTune);
+
+        txtStringToTune.setText(selectedString);
+
+
+
+        epicDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        epicDialog.show();
+
+
     }
 
     public void ConnectESP(){
@@ -313,8 +349,17 @@ public class NowTuningActivity extends AppCompatActivity {
                                             if(receivedString.equals("close")){
                                                 epicDialog.dismiss();
                                             }
-                                            if(receivedString.equals("start")){
-                                                epicDialog.dismiss();
+                                            if(receivedString.equals("one")){
+                                                ShowPopupWindowOne();
+                                            }
+                                            if(receivedString.equals("two")){
+                                                ShowPopupWindowTwo();
+                                            }
+                                            if(receivedString.equals("three")){
+                                                ShowPopupWindowThree();
+                                            }
+                                            if(receivedString.equals("four")){
+                                                ShowPopupWindowFour();
                                             }
 
 

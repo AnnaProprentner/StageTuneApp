@@ -9,7 +9,7 @@
     android:layout_gravity="center_horizontal"
     android:gravity="center_vertical"
 
-    android:background="#fafafa"
+
 
     >
 
@@ -17,68 +17,70 @@
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
 
-        app:cardCornerRadius="15dp"
-        app:cardBackgroundColor="#ffffff"
+        android:layout_alignParentLeft="true"
 
         android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        >
+        app:cardBackgroundColor="#97A4AE"
+        app:cardCornerRadius="15dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            >
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_marginTop="25dp"
                 android:layout_marginBottom="25dp"
+                android:orientation="vertical"
 
                 >
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
 
-                android:textAlignment="center"
-                android:textStyle="bold"
-                android:textSize="25dp"
-                android:text="Put StageTune on String:"
-                />
+                    android:text="Put StageTune on String:"
+                    android:textAlignment="center"
+                    android:textSize="25dp"
+                    android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/txtStringToTune"
+                <TextView
+                    android:id="@+id/txtStringToTune"
 
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
 
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="20dp"
 
-                android:textAlignment="center"
-                android:textStyle="bold"
-                android:textSize="25dp"
-                />
-
-
-            <Button
-                android:id="@+id/btnReadyPopUp"
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="50dp"
+                    android:textAlignment="center"
+                    android:textSize="25dp"
+                    android:textStyle="bold" />
 
 
-                />
+                <Button
+                    android:id="@+id/btnReadyPopUp"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="20dp"
+
+                    android:text="Ready!"
+
+                    />
 
             </LinearLayout>
 
