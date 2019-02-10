@@ -75,8 +75,8 @@ public class NowTuningActivity extends AppCompatActivity {
         Tune[6] = "e";
 
 
-        edtSend = (EditText) findViewById(R.id.edtSend);
-        edtReceive = (EditText) findViewById(R.id.edtReceive);
+       // edtSend = (EditText) findViewById(R.id.edtSend);
+       // edtReceive = (EditText) findViewById(R.id.edtReceive);
         btnStart = (Button) findViewById(R.id.btnStart);
         spStringSelect = (Spinner) findViewById(R.id.spStringSelect);
 
@@ -100,7 +100,7 @@ public class NowTuningActivity extends AppCompatActivity {
             public void onClick(View view) {
 
 
-              message = edtSend.getText().toString();
+             // message = edtSend.getText().toString();
               selectedString = spStringSelect.getSelectedItem().toString();
 
 
@@ -345,7 +345,7 @@ public class NowTuningActivity extends AppCompatActivity {
                                            receivedString = data;
                                             //Toast.makeText(getApplicationContext(), receivedString, Toast.LENGTH_SHORT).show();
 
-                                            edtReceive.setText(data);
+                                           // edtReceive.setText(data);
 
                                             if(receivedString.equals("close")){
                                                 epicDialog.dismiss();
