@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <TextView
         android:id="@+id/txtHeadLine"
         android:layout_width="wrap_content"
@@ -36,6 +37,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtHeadLine" />
 
+
+
     <Button
         android:id="@+id/btnStart"
         android:layout_width="240dp"
@@ -46,15 +49,19 @@
 
         android:layout_alignParentBottom="true"
 
-        android:layout_marginStart="72dp"
+        android:layout_marginStart="75dp"
         android:layout_marginTop="280dp"
-        android:layout_marginEnd="72dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="75dp"
+        android:layout_marginBottom="200dp"
         android:text="Start"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtStringToTune" />
+        app:layout_constraintTop_toBottomOf="@+id/txtStringToTune"
+
+        android:background="@drawable/button_standard"
+        android:textColor="#FFFFFF"
+        />
 
     <Spinner
         android:id="@+id/spStringSelect"
@@ -67,11 +74,13 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/edtReceive"
+
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtStringToTune" />
 
+    <!--
     <EditText
         android:id="@+id/edtSend"
         android:layout_width="wrap_content"
@@ -105,5 +114,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/txtHeadLine"
         app:layout_constraintVertical_bias="0.641" />
+
+-->
 
 </android.support.constraint.ConstraintLayout>

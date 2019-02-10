@@ -103,7 +103,7 @@ public class NowTuningActivity extends AppCompatActivity {
               message = edtSend.getText().toString();
               selectedString = spStringSelect.getSelectedItem().toString();
 
-/*
+
               if(selectedString.equals("E")){
                   SendString("E;");
               }else if(selectedString.equals("A")){
@@ -118,9 +118,9 @@ public class NowTuningActivity extends AppCompatActivity {
                   SendString("e;");
               }
 
-               */
 
-             /* switch (selectedString){
+                /*
+              switch (selectedString){
                   case "E": SendString("E;");
                       Toast.makeText(getApplicationContext(), selectedString, Toast.LENGTH_LONG).show();
                   case "A": SendString("A;");
@@ -128,9 +128,10 @@ public class NowTuningActivity extends AppCompatActivity {
                   case "G": SendString("G;");
                   case "H": SendString("H;");
                   case "e": SendString("e;");
-              }*/
+              }
+              */
 
-               // SendString(message);
+               //SendString(message);
 
                 ShowPopupWindowOne();
 
