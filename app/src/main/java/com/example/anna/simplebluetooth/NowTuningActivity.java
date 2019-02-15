@@ -5,10 +5,12 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -56,6 +58,8 @@ public class NowTuningActivity extends AppCompatActivity {
 
     String message;
 
+    String str = "";
+
     //Popup Window
      Dialog epicDialog;
      ImageView imgClosePopupTuning;
@@ -67,6 +71,16 @@ public class NowTuningActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_now_tuning);
 
+
+        if(getIntent().hasExtra("Tune") ==true){
+            Tune = getIntent().getExtras().getStringArray("Tune");
+
+
+
+        }
+
+        /*
+
         Tune[1] = "E";
         Tune[2] = "A";
         Tune[3] = "D";
@@ -74,9 +88,11 @@ public class NowTuningActivity extends AppCompatActivity {
         Tune[5] = "H";
         Tune[6] = "e";
 
+        */
 
        // edtSend = (EditText) findViewById(R.id.edtSend);
        // edtReceive = (EditText) findViewById(R.id.edtReceive);
+
         btnStart = (Button) findViewById(R.id.btnStart);
         spStringSelect = (Spinner) findViewById(R.id.spStringSelect);
 
@@ -93,14 +109,11 @@ public class NowTuningActivity extends AppCompatActivity {
         spStringSelect.setAdapter(adapter);
 
 
-
-
         btnStart.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
 
-
-             // message = edtSend.getText().toString();
+             // String you want to Tune
               selectedString = spStringSelect.getSelectedItem().toString();
 
 
@@ -119,7 +132,7 @@ public class NowTuningActivity extends AppCompatActivity {
               }
 
 
-                /*
+/*
               switch (selectedString){
                   case "E": SendString("E;");
                       Toast.makeText(getApplicationContext(), selectedString, Toast.LENGTH_LONG).show();
@@ -131,9 +144,7 @@ public class NowTuningActivity extends AppCompatActivity {
               }
               */
 
-               //SendString(message);
-
-                ShowPopupWindowOne();
+               ShowPopupWindowOne();
 
             }
         });
@@ -387,6 +398,28 @@ public class NowTuningActivity extends AppCompatActivity {
         workerThread.start();
        // return receivedDataBT[1];
 
+    }
+
+    public String[] doLoad(String key){
+
+
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+
+        String str = sp.getString(key, "DEFAULT");
+
+        String[] stringArray = str.split(":");
+
+        return stringArray;
+
+
+    }
+
+    public void doDelete(String key){
+        SharedPreferences sp =PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = sp.edit();
+
+        editor.remove(key);
+        editor.apply();
     }
 
 }

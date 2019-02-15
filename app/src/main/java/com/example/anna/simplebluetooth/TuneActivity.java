@@ -1,7 +1,9 @@
 package com.example.anna.simplebluetooth;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -14,13 +16,15 @@ import android.widget.Toast;
 public class TuneActivity extends AppCompatActivity {
 
     Spinner spE,spA,spD,spG,spH,spe;
-    Button btnStartTuning;
+    Button btnStartTuning, btnSave;
 
     String selectedE,selectedA,selectedD,selectedG,selectedH,selectede;
 
     String[] newTune = new String[7];
 
     int count = 0;
+
+    String str ="";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,6 +39,7 @@ public class TuneActivity extends AppCompatActivity {
         spe = (Spinner) findViewById(R.id.spStringe);
 
         btnStartTuning = (Button) findViewById(R.id.btnStartTuning);
+        btnSave = (Button) findViewById(R.id.btnSave);
 
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -123,30 +128,79 @@ public class TuneActivity extends AppCompatActivity {
         });
 
 
-            newTune[0] = "Tune" + count;
 
-            newTune[1] = selectedE;
-            newTune[2] = selectedA;
-            newTune[3] = selectedD;
-            newTune[4] = selectedG;
-            newTune[5] = selectedH;
-            newTune[6] = selectede;
 
+
+
+
+            btnSave.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    getStrings();
+                    doSave(newTune);
+                }
+            });
 
 
         btnStartTuning.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                count++;
+                /*
 
-                Toast.makeText(getApplicationContext(), selectedE, Toast.LENGTH_SHORT).show();
+                for(int i = 0; i<newTune.length; i++){
+                    str = str + newTune[i];
+                }
+
+                Toast.makeText(getApplicationContext(), str, Toast.LENGTH_SHORT).show();
+
+                */
+
+                getStrings();
 
                 Intent i3 = new Intent(TuneActivity.this,NowTuningActivity.class);
+                i3.putExtra("Tune", newTune);
+
                 startActivity(i3);
 
             }
         });
 
     }
+
+    public void getStrings(){
+
+      //  newTune[0] = "Tune" + count;
+
+        newTune[1] = selectedE;
+        newTune[2] = selectedA;
+        newTune[3] = selectedD;
+        newTune[4] = selectedG;
+        newTune[5] = selectedH;
+        newTune[6] = selectede;
+    }
+
+    public void doSave(String[] stringArray ){
+
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = sp.edit();
+
+        //Array To String
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i<stringArray.length; i++){
+            sb.append(stringArray[i]).append(":");
+        }
+
+        //Save String
+        editor.putString("KAKA",sb.toString());
+        editor.apply();
+
+        //Number of Saved Strings +1
+        count++;
+
+
+    }
+
+
 }
+
