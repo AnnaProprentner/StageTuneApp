@@ -52,13 +52,16 @@ public class NowTuningActivity extends AppCompatActivity {
     Spinner spStringSelect;
 
     String selectedString;
-    String receivedString ="";
+    String receivedString = "";
 
     String[] Tune = new String[7];
 
     String message;
 
     String str = "";
+    String s = "";
+
+    boolean firstSend = true;
 
     //Popup Window
      Dialog epicDialog;
@@ -66,17 +69,17 @@ public class NowTuningActivity extends AppCompatActivity {
      Button btnReadyPopup;
      TextView txtStringToTune;
 
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_now_tuning);
 
 
+
         if(getIntent().hasExtra("Tune") ==true){
             Tune = getIntent().getExtras().getStringArray("Tune");
-
-
-
         }
 
         /*
@@ -109,42 +112,50 @@ public class NowTuningActivity extends AppCompatActivity {
         spStringSelect.setAdapter(adapter);
 
 
+
+
         btnStart.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
+
+
+
+
+
+
 
              // String you want to Tune
               selectedString = spStringSelect.getSelectedItem().toString();
 
 
               if(selectedString.equals("E")){
-                  SendString("E;");
+                  s = Tune[1] + ";";
+
               }else if(selectedString.equals("A")){
-                  SendString("A;");
+                  s = Tune[2] + ";";
+
               }else if(selectedString.equals("D")){
-                  SendString("D;");
+                  // SendString("D;");
+                  s = Tune[3] + ";";
+
               }else if(selectedString.equals("G")){
-                  SendString("G;");
+                  //SendString("G;");
+                  s = Tune[4] + ";";
+
               }else if(selectedString.equals("H")){
-                  SendString("H;");
+                  //SendString("H;");
+                  s = Tune[5] + ";";
+
               }else if(selectedString.equals("e")){
-                  SendString("e;");
+                  //SendString("e;");
+                  s = Tune[6] + ";";
+
               }
 
+              SendString(s);
 
-/*
-              switch (selectedString){
-                  case "E": SendString("E;");
-                      Toast.makeText(getApplicationContext(), selectedString, Toast.LENGTH_LONG).show();
-                  case "A": SendString("A;");
-                  case "D": SendString("D;");
-                  case "G": SendString("G;");
-                  case "H": SendString("H;");
-                  case "e": SendString("e;");
-              }
-              */
+              ShowPopupWindowOne();
 
-               ShowPopupWindowOne();
 
             }
         });
@@ -154,7 +165,20 @@ public class NowTuningActivity extends AppCompatActivity {
     }
 
 
-   public void ShowPopupWindowOne(){
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        try {
+            btSocket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+    public void ShowPopupWindowOne(){
          epicDialog.setContentView(R.layout.popup_window_one);
          btnReadyPopup = (Button) epicDialog.findViewById(R.id.btnReadyPopUp);
          txtStringToTune = (TextView) epicDialog.findViewById(R.id.txtStringToTune);
@@ -296,11 +320,13 @@ public class NowTuningActivity extends AppCompatActivity {
     }
 
     public void SendString(String s){
+
         try {
             btSocket.getOutputStream().write(s.getBytes());
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
     void ListenForData() {
