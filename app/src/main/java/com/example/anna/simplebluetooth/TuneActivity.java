@@ -20,9 +20,10 @@ public class TuneActivity extends AppCompatActivity {
 
     String selectedE,selectedA,selectedD,selectedG,selectedH,selectede;
 
-    String[] newTune = new String[7];
+    String[] newTune = new String[6];
 
-    int count = 0;
+    //int count;
+
 
     String str ="";
 
@@ -172,12 +173,12 @@ public class TuneActivity extends AppCompatActivity {
 
       //  newTune[0] = "Tune" + count;
 
-        newTune[1] = selectedE;
-        newTune[2] = selectedA;
-        newTune[3] = selectedD;
-        newTune[4] = selectedG;
-        newTune[5] = selectedH;
-        newTune[6] = selectede;
+        newTune[0] = selectedE;
+        newTune[1] = selectedA;
+        newTune[2] = selectedD;
+        newTune[3] = selectedG;
+        newTune[4] = selectedH;
+        newTune[5] = selectede;
     }
 
     public void doSave(String[] stringArray ){
@@ -185,18 +186,35 @@ public class TuneActivity extends AppCompatActivity {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = sp.edit();
 
-        //Array To String
-        StringBuilder sb = new StringBuilder();
-        for(int i = 0; i<stringArray.length; i++){
-            sb.append(stringArray[i]).append(":");
-        }
 
-        //Save String
-        editor.putString("KAKA",sb.toString());
+        editor.putLong("Counter",sp.getLong("Counter",0) + 1);
         editor.apply();
 
-        //Number of Saved Strings +1
-        count++;
+        Long count = sp.getLong("Counter",0);
+        Toast.makeText(getApplicationContext(),"" + count, Toast.LENGTH_SHORT).show();
+
+        if(count < 8) {
+
+            String key = "Tune" + count;
+
+            //Array To String
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < stringArray.length; i++) {
+                sb.append(stringArray[i]).append(":");
+            }
+
+            //Save String
+            editor.putString(key, sb.toString());
+            editor.apply();
+
+            Intent i4 = new Intent(TuneActivity.this, SavedTunesActivity.class);
+            i4.putExtra("Key", key);
+            startActivity(i4);
+
+        }else{
+            Toast.makeText(getApplicationContext(),"Please Delete A Tune First!",Toast.LENGTH_SHORT).show();
+        }
+
 
 
     }

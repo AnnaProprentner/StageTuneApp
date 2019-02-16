@@ -54,7 +54,7 @@ public class NowTuningActivity extends AppCompatActivity {
     String selectedString;
     String receivedString = "";
 
-    String[] Tune = new String[7];
+    String[] Tune = new String[6];
 
     String message;
 
@@ -129,33 +129,32 @@ public class NowTuningActivity extends AppCompatActivity {
 
 
               if(selectedString.equals("E")){
-                  s = Tune[1] + ";";
+                  s = Tune[0] + ";";
 
               }else if(selectedString.equals("A")){
-                  s = Tune[2] + ";";
+                  s = Tune[1]+ ";";
 
               }else if(selectedString.equals("D")){
                   // SendString("D;");
-                  s = Tune[3] + ";";
+                  s = Tune[2] + ";";
 
               }else if(selectedString.equals("G")){
                   //SendString("G;");
-                  s = Tune[4] + ";";
+                  s = Tune[3] + ";";
 
               }else if(selectedString.equals("H")){
                   //SendString("H;");
-                  s = Tune[5] + ";";
+                  s = Tune[4] + ";";
 
               }else if(selectedString.equals("e")){
                   //SendString("e;");
-                  s = Tune[6] + ";";
+                  s = Tune[5] + ";";
 
               }
 
               SendString(s);
 
               ShowPopupWindowOne();
-
 
             }
         });

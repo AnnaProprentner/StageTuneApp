@@ -4,6 +4,8 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -71,7 +73,28 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        btnSavedTunes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i3 = new Intent(MainActivity.this, SavedTunesActivity.class);
+                startActivity(i3);
+            }
+        });
 
+        btnStringUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                doDeleteAll();
+            }
+        });
+
+    }
+
+    private void doDeleteAll() {
+        SharedPreferences sp =PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = sp.edit();
+
+        editor.clear().apply();
 
     }
 
@@ -157,6 +180,7 @@ public class MainActivity extends AppCompatActivity {
 //        });
 
     }
+
 
 
 

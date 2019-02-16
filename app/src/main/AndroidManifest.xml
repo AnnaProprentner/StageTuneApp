@@ -32,6 +32,10 @@
             android:parentActivityName=".TuneActivity">
         </activity>
 
+        <activity android:name=".SavedTunesActivity" android:theme="@style/StageTune"
+            android:parentActivityName=".MainActivity">
+        </activity>
+
 
     </application>
 
