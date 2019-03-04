@@ -1,10 +1,13 @@
 package com.example.anna.simplebluetooth;
 
+import android.app.Dialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,6 +15,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,7 +31,7 @@ import java.util.UUID;
 public class MainActivity extends AppCompatActivity {
 
     Button btnFreeTune, btnSavedTunes, btnStringUp, btnConnect ;
-    ListView lvDevices;
+
 
     private static final UUID PORT_UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
     BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -37,11 +41,18 @@ public class MainActivity extends AppCompatActivity {
 
     BluetoothSocket btSocket = null;
 
+    //Popup Window
+    Dialog epicDialog;
+    ImageView imgClosePopup;
+    ListView lvDevices;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        epicDialog = new Dialog(this);
 
         btnFreeTune = (Button) findViewById(R.id.btnFreeTune);
         btnSavedTunes = (Button) findViewById(R.id.btnSavedTunes);
@@ -59,8 +70,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                ConnectESP();
-                getPairedDevices();
+
+                showPopupWindow();
+
+
+
+
             }
         });
 
@@ -170,14 +185,37 @@ public class MainActivity extends AppCompatActivity {
         }
 
         final ArrayAdapter adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,list);
+       lvDevices.setAdapter(adapter);
 
-//        lvDevices.setAdapter(adapter);
-//        lvDevices.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
 //            @Override
 //            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 //               Object choosenDevice = list.get(position);
 //            }
 //        });
+
+    }
+
+    public void showPopupWindow(){
+        epicDialog.setContentView(R.layout.popup_window_devices);
+        imgClosePopup = (ImageView) epicDialog.findViewById(R.id.imgClosePopup);
+        lvDevices = (ListView) epicDialog.findViewById(R.id.lvDevices);
+
+        getPairedDevices();
+
+        imgClosePopup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                epicDialog.dismiss();
+            }
+        });
+
+
+        epicDialog.setCanceledOnTouchOutside(false);
+
+        epicDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        epicDialog.show();
 
     }
 

@@ -118,41 +118,35 @@ public class NowTuningActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-
-
-
-
-
-
              // String you want to Tune
               selectedString = spStringSelect.getSelectedItem().toString();
 
 
               if(selectedString.equals("E")){
-                  s = Tune[0] + ";";
+                  s = Tune[0] ;
 
               }else if(selectedString.equals("A")){
-                  s = Tune[1]+ ";";
+                  s = Tune[1];
 
               }else if(selectedString.equals("D")){
                   // SendString("D;");
-                  s = Tune[2] + ";";
+                  s = Tune[2] ;
 
               }else if(selectedString.equals("G")){
                   //SendString("G;");
-                  s = Tune[3] + ";";
+                  s = Tune[3] ;
 
               }else if(selectedString.equals("H")){
                   //SendString("H;");
-                  s = Tune[4] + ";";
+                  s = Tune[4] ;
 
               }else if(selectedString.equals("e")){
                   //SendString("e;");
-                  s = Tune[5] + ";";
+                  s = Tune[5] ;
 
               }
 
-              SendString(s);
+              SendString(convertToFrequency(s)); //sends required Frequency as string
 
               ShowPopupWindowOne();
 
@@ -174,8 +168,6 @@ public class NowTuningActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
-
 
     public void ShowPopupWindowOne(){
          epicDialog.setContentView(R.layout.popup_window_one);
@@ -312,7 +304,8 @@ public class NowTuningActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "No Paired Bluetooth Devices", Toast.LENGTH_LONG).show();
         }
 
-        final ArrayAdapter adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,list);
+        //final ArrayAdapter adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,list);
+
         //lvDevices.setAdapter(adapter);
         //lvDevices.setOnItemClickListener(deviceListClickListener);
 
@@ -423,6 +416,24 @@ public class NowTuningActivity extends AppCompatActivity {
         workerThread.start();
        // return receivedDataBT[1];
 
+    }
+
+    public String convertToFrequency(String string){
+        String ret = "";
+        if(string.equals("E")){
+            ret = "82,64;";
+        }else if(string.equals("A")){
+            ret = "111,10;";
+        }else if(string.equals("D")){
+            ret = "147,10;";
+        }else if(string.equals("G")){
+            ret = "196,10;";
+        }else if(string.equals("H")){
+            ret = "274,50;";
+        }else if(string.equals("e")){
+            ret = "274,50;";
+        }
+        return ret;
     }
 
     public String[] doLoad(String key){

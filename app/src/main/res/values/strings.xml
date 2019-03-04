@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SimpleBluetooth</string>
+    <string name="app_name">StageTune</string>
 
     <string-array name="string_names">
         <item>E</item>

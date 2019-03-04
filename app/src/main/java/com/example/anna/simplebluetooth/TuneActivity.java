@@ -22,7 +22,7 @@ public class TuneActivity extends AppCompatActivity {
 
     String[] newTune = new String[6];
 
-    //int count;
+    int count;
 
 
     String str ="";
@@ -134,11 +134,15 @@ public class TuneActivity extends AppCompatActivity {
 
 
 
-            btnSave.setOnClickListener(new View.OnClickListener() {
+        btnSave.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    getStrings();
-                    doSave(newTune);
+                    if(doLoadInt("Counter")< 8){
+                        getStrings();
+                        doSave(newTune);
+                    }
+
+
                 }
             });
 
@@ -186,16 +190,18 @@ public class TuneActivity extends AppCompatActivity {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = sp.edit();
 
+        if(!sp.contains("Counter")){
+            editor.putInt("Counter",1);
+            editor.apply();
+        }else{
+            editor.putInt("Counter", sp.getInt("Counter",1) + 1);
+            editor.apply();
+        }
 
-        editor.putLong("Counter",sp.getLong("Counter",0) + 1);
-        editor.apply();
+        count = sp.getInt("Counter",1);
+        String key = "Tune" + count;
 
-        Long count = sp.getLong("Counter",0);
         Toast.makeText(getApplicationContext(),"" + count, Toast.LENGTH_SHORT).show();
-
-        if(count < 8) {
-
-            String key = "Tune" + count;
 
             //Array To String
             StringBuilder sb = new StringBuilder();
@@ -207,15 +213,16 @@ public class TuneActivity extends AppCompatActivity {
             editor.putString(key, sb.toString());
             editor.apply();
 
+
             Intent i4 = new Intent(TuneActivity.this, SavedTunesActivity.class);
             i4.putExtra("Key", key);
             startActivity(i4);
+    }
 
-        }else{
-            Toast.makeText(getApplicationContext(),"Please Delete A Tune First!",Toast.LENGTH_SHORT).show();
-        }
-
-
+    public int doLoadInt(String key){
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        int i = sp.getInt(key, 0);
+        return i;
 
     }
 

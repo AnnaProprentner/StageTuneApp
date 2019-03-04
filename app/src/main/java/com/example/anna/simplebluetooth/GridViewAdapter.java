@@ -52,7 +52,7 @@ public class GridViewAdapter extends BaseAdapter {
                 @Override
                 public void onClick(View view) {
 
-                    String toast = doLoad(button.getText().toString(),myContext);
+                    String toast = doLoad(button.getText().toString(), myContext);
                     Toast.makeText(myContext,toast,Toast.LENGTH_SHORT).show();
 
                 }

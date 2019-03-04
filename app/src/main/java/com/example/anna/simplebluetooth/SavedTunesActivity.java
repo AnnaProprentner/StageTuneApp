@@ -20,30 +20,28 @@ import static java.sql.DriverManager.println;
 
 public class SavedTunesActivity extends AppCompatActivity{
 
-    Button btnTuneOne;
     String key = "";
 
     List<String> tuneKeyList = new ArrayList<>();
 
-    Long number;
+    int number,count;
 
-    // SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+
+     //SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_saved_tunes);
 
-        number = doLoadLong("Counter");
-        Toast.makeText(getApplicationContext(), "" + number, Toast.LENGTH_LONG).show();
+        count = doLoadInt("Counter");
+        //Toast.makeText(getApplicationContext(), "" + number, Toast.LENGTH_LONG).show();
        // btnTuneOne = (Button) findViewById(R.id.btnTuneOne);
 
-        for(int i = 1; i<=number; i++){
+        for(int i = 1; i<=count; i++){
             tuneKeyList.add("Tune" + i);
            // Log.d("KEYLIST",tuneKeyList.get(i));
         }
-
-
 
 
         if(getIntent().hasExtra("Key") == true){
@@ -75,6 +73,16 @@ public class SavedTunesActivity extends AppCompatActivity{
        // String[] stringArray = str.split(":");
 
         return str;
+
+    }
+
+    public int doLoadInt(String key){
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        int i = sp.getInt(key, 0);
+
+        // String[] stringArray = str.split(":");
+
+        return i;
 
     }
 
