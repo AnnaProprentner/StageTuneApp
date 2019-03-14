@@ -78,9 +78,11 @@ public class NowTuningActivity extends AppCompatActivity {
 
 
 
-        if(getIntent().hasExtra("Tune") ==true){
+        if(getIntent().hasExtra("Tune") == true){
             Tune = getIntent().getExtras().getStringArray("Tune");
         }
+
+
 
         /*
 
@@ -123,7 +125,7 @@ public class NowTuningActivity extends AppCompatActivity {
 
 
               if(selectedString.equals("E")){
-                  s = Tune[0] ;
+                  s = Tune[0];
 
               }else if(selectedString.equals("A")){
                   s = Tune[1];
@@ -153,8 +155,6 @@ public class NowTuningActivity extends AppCompatActivity {
             }
         });
 
-
-
     }
 
 
@@ -180,7 +180,7 @@ public class NowTuningActivity extends AppCompatActivity {
              @Override
              public void onClick(View view) {
                  //epicDialog.dismiss();
-                 ShowPopupWindowThree();
+                 ShowPopupWindowTwo();
              }
          });
 
@@ -371,8 +371,8 @@ public class NowTuningActivity extends AppCompatActivity {
                                         @Override
                                         public void run() {
                                             //edtMessage.setText(data);
-                                           receivedString = data;
-                                            //Toast.makeText(getApplicationContext(), receivedString, Toast.LENGTH_SHORT).show();
+                                           receivedString = data.trim();
+                                            Toast.makeText(getApplicationContext(), receivedString, Toast.LENGTH_SHORT).show();
 
                                            // edtReceive.setText(data);
 

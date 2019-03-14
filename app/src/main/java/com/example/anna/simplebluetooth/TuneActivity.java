@@ -206,7 +206,7 @@ public class TuneActivity extends AppCompatActivity {
             //Array To String
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < stringArray.length; i++) {
-                sb.append(stringArray[i]).append(":");
+                sb.append(stringArray[i]).append(" ");
             }
 
             //Save String

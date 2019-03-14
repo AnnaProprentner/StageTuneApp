@@ -1,6 +1,7 @@
 package com.example.anna.simplebluetooth;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -26,6 +27,8 @@ public class SavedTunesActivity extends AppCompatActivity{
 
     int number,count;
 
+    Dialog epicDialog;
+
 
      //SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -33,6 +36,8 @@ public class SavedTunesActivity extends AppCompatActivity{
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_saved_tunes);
+
+        epicDialog = new Dialog(this);
 
         count = doLoadInt("Counter");
         //Toast.makeText(getApplicationContext(), "" + number, Toast.LENGTH_LONG).show();
@@ -49,7 +54,7 @@ public class SavedTunesActivity extends AppCompatActivity{
         }
 
         GridView gridView = (GridView) findViewById(R.id.gridView);
-        GridViewAdapter adapter = new GridViewAdapter(tuneKeyList,this);
+        GridViewAdapter adapter = new GridViewAdapter(tuneKeyList,this,epicDialog,SavedTunesActivity.this);
         gridView.setAdapter(adapter);
 
         /*

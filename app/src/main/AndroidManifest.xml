@@ -29,7 +29,8 @@
         </activity>
 
         <activity android:name=".NowTuningActivity" android:theme="@style/StageTune"
-            android:parentActivityName=".TuneActivity">
+            android:parentActivityName=".TuneActivity"
+            >
         </activity>
 
         <activity android:name=".SavedTunesActivity" android:theme="@style/StageTune"
