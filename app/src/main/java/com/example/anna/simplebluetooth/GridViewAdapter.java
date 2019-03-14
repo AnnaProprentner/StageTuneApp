@@ -79,6 +79,7 @@ public class GridViewAdapter extends BaseAdapter {
                 public void onClick(View view) {
 
                     String tuneName = button.getText().toString();
+
                     String selectedTune = doLoad(tuneName,myContext);
 
 

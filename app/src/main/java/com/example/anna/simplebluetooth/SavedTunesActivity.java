@@ -16,6 +16,7 @@ import android.widget.Toast;
 import java.sql.DriverManager;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static java.sql.DriverManager.println;
 
@@ -37,38 +38,51 @@ public class SavedTunesActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_saved_tunes);
 
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = sp.edit();
+
+        //tuneKeyList = getAllKeys();
+
+        Map<String, ?> allTunes = sp.getAll();
+        tuneKeyList = new ArrayList<String>(allTunes.keySet());
+
+        for (String k: tuneKeyList) {
+            Toast.makeText(getApplicationContext(),k ,Toast.LENGTH_SHORT).show();
+
+        }
+
         epicDialog = new Dialog(this);
 
-        count = doLoadInt("Counter");
-        //Toast.makeText(getApplicationContext(), "" + number, Toast.LENGTH_LONG).show();
-       // btnTuneOne = (Button) findViewById(R.id.btnTuneOne);
 
+        /*
+        count = doLoadInt("Counter");
         for(int i = 1; i<=count; i++){
             tuneKeyList.add("Tune" + i);
-           // Log.d("KEYLIST",tuneKeyList.get(i));
         }
 
 
         if(getIntent().hasExtra("Key") == true){
             key = getIntent().getExtras().getString("Key");
         }
+ */
+
 
         GridView gridView = (GridView) findViewById(R.id.gridView);
         GridViewAdapter adapter = new GridViewAdapter(tuneKeyList,this,epicDialog,SavedTunesActivity.this);
         gridView.setAdapter(adapter);
 
-        /*
-        btnTuneOne.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                btnTuneOne.setText(key);
 
-                Toast.makeText(getApplicationContext(), doLoad(key),Toast.LENGTH_LONG).show();
+    }
 
-            }
-        });
+    public List<String> getAllKeys(){
 
-        */
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+
+        Map<String, ?> allTunes = sp.getAll();
+        List<String> keys = new ArrayList<String>(allTunes.keySet());
+
+        return keys;
+
     }
 
     public String doLoad(String key){

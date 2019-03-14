@@ -1,5 +1,6 @@
 package com.example.anna.simplebluetooth;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -18,7 +20,13 @@ public class TuneActivity extends AppCompatActivity {
     Spinner spE,spA,spD,spG,spH,spe;
     Button btnStartTuning, btnSave;
 
+    EditText edtKey;
+    Dialog dialogSave;
+    Button btnDialogSave;
+
     String selectedE,selectedA,selectedD,selectedG,selectedH,selectede;
+
+    String tuneKey;
 
     String[] newTune = new String[6];
 
@@ -137,11 +145,39 @@ public class TuneActivity extends AppCompatActivity {
         btnSave.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
+                    dialogSave = new Dialog(TuneActivity.this);
+                    dialogSave.setContentView(R.layout.dialog_tune_name);
+                    dialogSave.show();
+
+                    edtKey = dialogSave.findViewById(R.id.edtKey);
+                    btnDialogSave = dialogSave.findViewById(R.id.btnDialogSave);
+
+
+
+                   btnDialogSave.setOnClickListener(new View.OnClickListener() {
+                       @Override
+                       public void onClick(View view) {
+                           tuneKey = edtKey.getText().toString().trim();
+
+                           getStrings();
+                           doSave(tuneKey,newTune);
+
+                           Intent i4 = new Intent(TuneActivity.this, SavedTunesActivity.class);
+                           startActivity(i4);
+                       }
+                   });
+
+
+
+
+
+                    /*
                     if(doLoadInt("Counter")< 8){
                         getStrings();
                         doSave(newTune);
                     }
-
+                    */
 
                 }
             });
@@ -185,10 +221,26 @@ public class TuneActivity extends AppCompatActivity {
         newTune[5] = selectede;
     }
 
-    public void doSave(String[] stringArray ){
+    public void doSave(String key, String[] stringArray ){
+
+        String tuneString="";
 
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = sp.edit();
+
+        //Array To String
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < stringArray.length; i++) {
+            sb.append(stringArray[i]).append(" ");
+        }
+
+        tuneString = sb.toString();
+
+        editor.putString(key,tuneString);
+        editor.apply();
+
+
+        /*
 
         if(!sp.contains("Counter")){
             editor.putInt("Counter",1);
@@ -217,6 +269,8 @@ public class TuneActivity extends AppCompatActivity {
             Intent i4 = new Intent(TuneActivity.this, SavedTunesActivity.class);
             i4.putExtra("Key", key);
             startActivity(i4);
+
+            */
     }
 
     public int doLoadInt(String key){
