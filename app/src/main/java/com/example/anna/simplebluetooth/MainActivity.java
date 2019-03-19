@@ -17,14 +17,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -37,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
     BluetoothDevice device = null;
+    BluetoothDevice choosenDevice = null;
     boolean found;
 
     BluetoothSocket btSocket = null;
@@ -83,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                // SendString("I AM ALIVE");
-                Intent i2 = new Intent(MainActivity.this, TuneActivity.class);
+                Intent i2 = new Intent(MainActivity.this, NewTuneActivity.class);
                 startActivity(i2);
             }
         });
@@ -113,6 +110,14 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void SendString(String s){
+        try {
+            btSocket.getOutputStream().write(s.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void ConnectESP(){
         if (pairedDevices.isEmpty()) {
 
@@ -122,17 +127,14 @@ public class MainActivity extends AppCompatActivity {
 
             for (BluetoothDevice iterator : pairedDevices) {
 
-                if (iterator.getAddress().toString().equals("30:AE:A4:75:5B:1E"))
-
-                {
+                if (iterator.getAddress().toString().equals("30:AE:A4:75:5B:1E")){
 
                     device = iterator; //device is an object of type BluetoothDevice
                     found = true;
 
-                    Toast.makeText(getApplicationContext(), "Now Connected", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(), "Now Connected", Toast.LENGTH_LONG).show();
 
                     break;
-
                 }
             }
         }
@@ -145,6 +147,7 @@ public class MainActivity extends AppCompatActivity {
         }
         try {
             btSocket.connect();
+            Toast.makeText(getApplicationContext(), "Now Connected", Toast.LENGTH_LONG).show();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -152,14 +155,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    }
-
-    public void SendString(String s){
-        try {
-            btSocket.getOutputStream().write(s.getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public void getPairedDevices(){
@@ -178,21 +173,40 @@ public class MainActivity extends AppCompatActivity {
 
         if(pairedDevices.size()>0){
             for (BluetoothDevice bd : pairedDevices){
-                list.add(bd.getName() + "\n" + bd.getAddress());
+                list.add(bd.getName());
+                Toast.makeText(getApplicationContext(), bd.getAddress(), Toast.LENGTH_SHORT).show();
+
+                // list.add(bd.getName() + "\n" + bd.getAddress());
             }
         }else{
             Toast.makeText(getApplicationContext(), "No Paired Bluetooth Devices", Toast.LENGTH_LONG).show();
         }
 
         final ArrayAdapter adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,list);
-       lvDevices.setAdapter(adapter);
+        lvDevices.setAdapter(adapter);
 
+        lvDevices.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                String deviceName = list.get(position).toString();
 
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-//               Object choosenDevice = list.get(position);
-//            }
-//        });
+                for (BluetoothDevice bd : pairedDevices){
+                   if(bd.getName().equals(deviceName)){
+
+                   }
+
+                }
+            }
+        });
+
+/*
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+              Object choosenDevice = list.get(position);
+            }
+        });
+*/
+
 
     }
 

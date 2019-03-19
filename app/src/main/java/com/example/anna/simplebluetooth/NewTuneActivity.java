@@ -13,13 +13,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
-public class TuneActivity extends AppCompatActivity {
+public class NewTuneActivity extends AppCompatActivity {
 
     Spinner spE,spA,spD,spG,spH,spe;
     Button btnStartTuning, btnSave;
 
+    //Dialog
     EditText edtKey;
     Dialog dialogSave;
     Button btnDialogSave;
@@ -29,9 +29,6 @@ public class TuneActivity extends AppCompatActivity {
     String tuneKey;
 
     String[] newTune = new String[6];
-
-    int count;
-
 
     String str ="";
 
@@ -138,15 +135,11 @@ public class TuneActivity extends AppCompatActivity {
 
 
 
-
-
-
-
         btnSave.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
-                    dialogSave = new Dialog(TuneActivity.this);
+                    dialogSave = new Dialog(NewTuneActivity.this);
                     dialogSave.setContentView(R.layout.dialog_tune_name);
                     dialogSave.show();
 
@@ -163,22 +156,10 @@ public class TuneActivity extends AppCompatActivity {
                            getStrings();
                            doSave(tuneKey,newTune);
 
-                           Intent i4 = new Intent(TuneActivity.this, SavedTunesActivity.class);
+                           Intent i4 = new Intent(NewTuneActivity.this, SavedTunesActivity.class);
                            startActivity(i4);
                        }
                    });
-
-
-
-
-
-                    /*
-                    if(doLoadInt("Counter")< 8){
-                        getStrings();
-                        doSave(newTune);
-                    }
-                    */
-
                 }
             });
 
@@ -187,19 +168,9 @@ public class TuneActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                /*
-
-                for(int i = 0; i<newTune.length; i++){
-                    str = str + newTune[i];
-                }
-
-                Toast.makeText(getApplicationContext(), str, Toast.LENGTH_SHORT).show();
-
-                */
-
                 getStrings();
 
-                Intent i3 = new Intent(TuneActivity.this,NowTuningActivity.class);
+                Intent i3 = new Intent(NewTuneActivity.this,NowTuningActivity.class);
                 i3.putExtra("Tune", newTune);
 
                 startActivity(i3);
@@ -239,47 +210,7 @@ public class TuneActivity extends AppCompatActivity {
         editor.putString(key,tuneString);
         editor.apply();
 
-
-        /*
-
-        if(!sp.contains("Counter")){
-            editor.putInt("Counter",1);
-            editor.apply();
-        }else{
-            editor.putInt("Counter", sp.getInt("Counter",1) + 1);
-            editor.apply();
-        }
-
-        count = sp.getInt("Counter",1);
-        String key = "Tune" + count;
-
-        Toast.makeText(getApplicationContext(),"" + count, Toast.LENGTH_SHORT).show();
-
-            //Array To String
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < stringArray.length; i++) {
-                sb.append(stringArray[i]).append(" ");
-            }
-
-            //Save String
-            editor.putString(key, sb.toString());
-            editor.apply();
-
-
-            Intent i4 = new Intent(TuneActivity.this, SavedTunesActivity.class);
-            i4.putExtra("Key", key);
-            startActivity(i4);
-
-            */
     }
-
-    public int doLoadInt(String key){
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-        int i = sp.getInt(key, 0);
-        return i;
-
-    }
-
 
 }
 
