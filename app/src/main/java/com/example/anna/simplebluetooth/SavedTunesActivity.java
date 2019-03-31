@@ -87,11 +87,12 @@ public class SavedTunesActivity extends AppCompatActivity{
 
     public String doLoad(String key){
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-        String str = sp.getString(key, "EMPTY");
+
+        String tune = sp.getString(key, "EMPTY");
 
        // String[] stringArray = str.split(":");
 
-        return str;
+        return tune;
 
     }
 

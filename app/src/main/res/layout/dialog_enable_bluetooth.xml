@@ -10,14 +10,9 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
 
-        android:layout_margin="10dp"
-
-
-        >
+        android:layout_margin="10dp">
 
         <TextView
-
-            android:fontFamily="@font/gill_sans_mt_regular"
             android:textSize="30dp"
 
             android:layout_width="match_parent"
@@ -28,8 +23,6 @@
 
 
             android:text="Allow StageTune to enable bluetooth?"
-
-
             />
 
         <LinearLayout
@@ -49,9 +42,6 @@
 
 
             android:text="Allow"
-            android:fontFamily="@font/gill_sans_mt_regular"
-
-
             />
 
         <Button
@@ -61,11 +51,7 @@
 
             android:layout_gravity="right"
 
-
             android:text="Cancel"
-            android:fontFamily="@font/gill_sans_mt_regular"
-
-
             />
 
         </LinearLayout>

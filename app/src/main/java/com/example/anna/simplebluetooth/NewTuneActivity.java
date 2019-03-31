@@ -182,8 +182,6 @@ public class NewTuneActivity extends AppCompatActivity {
 
     public void getStrings(){
 
-      //  newTune[0] = "Tune" + count;
-
         newTune[0] = selectedE;
         newTune[1] = selectedA;
         newTune[2] = selectedD;
@@ -201,10 +199,9 @@ public class NewTuneActivity extends AppCompatActivity {
 
         //Array To String
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < stringArray.length; i++) {
+        for (int i = 0; i < stringArray.length; i++){
             sb.append(stringArray[i]).append(" ");
         }
-
         tuneString = sb.toString();
 
         editor.putString(key,tuneString);

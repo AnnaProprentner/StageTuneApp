@@ -73,7 +73,6 @@ public class NowTuningActivity extends AppCompatActivity {
 
 
     //EnableBluetooth
-
     Dialog requestDialog;
     Button btnAllow;
     Button btnCancel;
@@ -210,7 +209,7 @@ public class NowTuningActivity extends AppCompatActivity {
     }
 
     public void ShowPopupWindowOne() {
-        epicDialog.setContentView(R.layout.popup_window_one);
+        epicDialog.setContentView(R.layout.dialog_tuning_one);
         btnReadyPopup = (Button) epicDialog.findViewById(R.id.btnReadyPopUp);
         txtStringToTune = (TextView) epicDialog.findViewById(R.id.txtStringToTune);
 
@@ -232,7 +231,7 @@ public class NowTuningActivity extends AppCompatActivity {
     }
 
     public void ShowPopupWindowTwo() {
-        epicDialog.setContentView(R.layout.popup_window_two);
+        epicDialog.setContentView(R.layout.dialog_tuning_two);
 
         txtStringToTune = (TextView) epicDialog.findViewById(R.id.txtStringToTune);
 
@@ -247,7 +246,7 @@ public class NowTuningActivity extends AppCompatActivity {
     }
 
     public void ShowPopupWindowThree() {
-        epicDialog.setContentView(R.layout.popup_window_three);
+        epicDialog.setContentView(R.layout.dialog_tuning_three);
 
         imgClosePopupTuning = (ImageView) epicDialog.findViewById(R.id.imgClosePopupTuning);
 
@@ -267,7 +266,7 @@ public class NowTuningActivity extends AppCompatActivity {
     }
 
     public void ShowPopupWindowFour() {
-        epicDialog.setContentView(R.layout.popup_window_four);
+        epicDialog.setContentView(R.layout.dialog_tuning_four);
 
         txtStringToTune = (TextView) epicDialog.findViewById(R.id.txtStringToTune);
 
@@ -390,6 +389,7 @@ public class NowTuningActivity extends AppCompatActivity {
                                             }
                                             if (receivedString.equals("four")) {
                                                 ShowPopupWindowFour();
+                                                //btSocket.close();
                                             }
                                         }
                                     });
@@ -415,17 +415,17 @@ public class NowTuningActivity extends AppCompatActivity {
     public String convertToFrequency(String string) {
         String ret = "";
         if (string.equals("E")) {
-            ret = "82,64;";
+            ret = "82.64;";
         } else if (string.equals("A")) {
-            ret = "111,10;";
+            ret = "111.10;";
         } else if (string.equals("D")) {
-            ret = "147,10;";
+            ret = "147.10;";
         } else if (string.equals("G")) {
-            ret = "196,10;";
+            ret = "196.10;";
         } else if (string.equals("H")) {
-            ret = "274,50;";
+            ret = "274.50;";
         } else if (string.equals("e")) {
-            ret = "274,50;";
+            ret = "274.50;";
         }
         return ret;
     }

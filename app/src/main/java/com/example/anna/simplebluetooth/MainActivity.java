@@ -211,7 +211,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showPopupWindow(){
-        epicDialog.setContentView(R.layout.popup_window_devices);
+        epicDialog.setContentView(R.layout.dialog_devices);
         imgClosePopup = (ImageView) epicDialog.findViewById(R.id.imgClosePopup);
         lvDevices = (ListView) epicDialog.findViewById(R.id.lvDevices);
 
