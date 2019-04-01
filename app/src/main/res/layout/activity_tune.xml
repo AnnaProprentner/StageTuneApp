@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <RelativeLayout
         android:id="@+id/relativeLayout2"
         android:layout_width="fill_parent"
@@ -17,16 +18,46 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/txtE"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="75dp"
 
-        android:text="E"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="145dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Note"
+
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Octave"
+
+                android:layout_marginLeft="20dp"
+
+                />
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/txtE"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="75dp"
+
+            android:text="E"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
         <View
             android:layout_width="match_parent"
@@ -36,14 +67,33 @@
             android:layout_marginTop="100dp"
             android:background="@android:color/darker_gray" />
 
-        <Spinner
-            android:id="@+id/spStringE"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
+
             android:layout_marginTop="75dp"
-            android:layout_marginEnd="145dp" />
+            android:layout_marginEnd="145dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <Spinner
+                android:id="@+id/spStringE"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+
+
+                />
+
+            <Spinner
+                android:id="@+id/spOctaveE"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+
+                />
+
+        </LinearLayout>
 
 
         <TextView
@@ -54,8 +104,7 @@
             android:layout_marginTop="125dp"
 
             android:text="A"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-            />
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
         <View
             android:layout_width="match_parent"
@@ -65,15 +114,28 @@
             android:layout_marginTop="150dp"
             android:background="@android:color/darker_gray" />
 
-        <Spinner
-            android:id="@+id/spStringA"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="125dp"
-            android:layout_marginEnd="145dp" />
 
+            android:layout_marginTop="125dp"
+            android:layout_marginEnd="145dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <Spinner
+                android:id="@+id/spStringA"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"/>
+
+            <Spinner
+                android:id="@+id/spOctaveA"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
 
 
         <TextView
@@ -84,8 +146,7 @@
             android:layout_marginTop="175dp"
 
             android:text="D"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-            />
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
         <View
             android:layout_width="match_parent"
@@ -95,15 +156,28 @@
             android:layout_marginTop="200dp"
             android:background="@android:color/darker_gray" />
 
-        <Spinner
-            android:id="@+id/spStringD"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="175dp"
-            android:layout_marginEnd="145dp" />
 
+            android:layout_marginTop="175dp"
+            android:layout_marginEnd="145dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <Spinner
+                android:id="@+id/spStringD"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"/>
+
+            <Spinner
+                android:id="@+id/spOctaveD"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
 
 
         <TextView
@@ -114,8 +188,7 @@
             android:layout_marginTop="225dp"
 
             android:text="G"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-            />
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
         <View
             android:layout_width="match_parent"
@@ -123,21 +196,30 @@
             android:layout_alignParentTop="true"
             android:layout_marginStart="45dp"
             android:layout_marginTop="250dp"
-            android:background="@android:color/darker_gray"
-            />
+            android:background="@android:color/darker_gray" />
 
-        <Spinner
-            android:id="@+id/spStringG"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
+
             android:layout_marginTop="225dp"
             android:layout_marginEnd="145dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-            android:layout_centerHorizontal="true"
-            />
+            <Spinner
+                android:id="@+id/spStringG"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"/>
 
+            <Spinner
+                android:id="@+id/spOctaveG"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
 
 
         <TextView
@@ -148,8 +230,7 @@
             android:layout_marginTop="275dp"
 
             android:text="H"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-            />
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
         <View
             android:layout_width="match_parent"
@@ -159,17 +240,28 @@
             android:layout_marginTop="300dp"
             android:background="@android:color/darker_gray" />
 
-        <Spinner
-            android:id="@+id/spStringH"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
+
             android:layout_marginTop="275dp"
             android:layout_marginEnd="145dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-            android:layout_centerHorizontal="true"
-            />
+            <Spinner
+                android:id="@+id/spStringH"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"/>
+
+            <Spinner
+                android:id="@+id/spOctaveH"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
 
 
         <TextView
@@ -180,8 +272,7 @@
             android:layout_marginTop="325dp"
 
             android:text="e"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-            />
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
         <View
             android:layout_width="match_parent"
@@ -191,17 +282,28 @@
             android:layout_marginTop="350dp"
             android:background="@android:color/darker_gray" />
 
-        <Spinner
-            android:id="@+id/spStringe"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
+
             android:layout_marginTop="325dp"
             android:layout_marginEnd="145dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-            android:layout_centerHorizontal="true"
-            />
+            <Spinner
+                android:id="@+id/spStringe"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"/>
+
+            <Spinner
+                android:id="@+id/spOctavee"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
 
 
         <Button
@@ -225,7 +327,6 @@
             android:id="@+id/btnSave"
             android:layout_width="270dp"
             android:layout_height="80dp"
-
 
 
             android:layout_centerHorizontal="true"

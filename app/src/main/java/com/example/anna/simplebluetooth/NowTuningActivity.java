@@ -315,7 +315,7 @@ public class NowTuningActivity extends AppCompatActivity {
             } catch (IOException e) {
                 connected = false;
                 Toast.makeText(getApplicationContext(), "Connection failed.\n" +
-                        "Please make sure the tuner is turned on and in range.", Toast.LENGTH_LONG).show();
+                        "Please make sure the tuner is switched on and in range.", Toast.LENGTH_LONG).show();
                 btSocket = null;
                 return;
             }
@@ -414,18 +414,37 @@ public class NowTuningActivity extends AppCompatActivity {
 
     public String convertToFrequency(String string) {
         String ret = "";
-        if (string.equals("E")) {
+
+        if (string.equals("E2")) {
             ret = "82.64;";
-        } else if (string.equals("A")) {
-            ret = "111.10;";
-        } else if (string.equals("D")) {
-            ret = "147.10;";
-        } else if (string.equals("G")) {
-            ret = "196.10;";
-        } else if (string.equals("H")) {
-            ret = "274.50;";
-        } else if (string.equals("e")) {
-            ret = "274.50;";
+        } else if (string.equals("F2")) {
+            ret = "92.50;";
+        }else if (string.equals("G2")) {
+            ret = "98.00;";
+        }else if (string.equals("A2")) {
+            ret = "110.00;";
+        }else if (string.equals("H2")) {
+            ret = "123.47;";
+        }else if (string.equals("C3")) {
+            ret = "130.81;";
+        }else if (string.equals("D3")) {
+            ret = "146.83;";
+        }else if (string.equals("E3")) {
+            ret = "164.81;";
+        }else if (string.equals("F3")) {
+            ret = "174,61;";
+        }else if (string.equals("G3")) {
+            ret = "196.00;";
+        }else if (string.equals("A3")) {
+            ret = "220.00;";
+        }else if (string.equals("H3")) {
+            ret = "246.94;";
+        }else if (string.equals("C4")) {
+            ret = "261.63;";
+        }else if (string.equals("D4")) {
+            ret = "293.67;";
+        }else if (string.equals("E4")) {
+            ret = "329.63;";
         }
         return ret;
     }

@@ -13,10 +13,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class NewTuneActivity extends AppCompatActivity {
 
-    Spinner spE,spA,spD,spG,spH,spe;
+    Spinner spE, spA, spD, spG, spH, spe;
+    Spinner spOE, spOA, spOD, spOG, spOH, spOe;
     Button btnStartTuning, btnSave;
 
     //Dialog
@@ -24,13 +27,21 @@ public class NewTuneActivity extends AppCompatActivity {
     Dialog dialogSave;
     Button btnDialogSave;
 
-    String selectedE,selectedA,selectedD,selectedG,selectedH,selectede;
+    //Error
+    Dialog dialogErr;
+    TextView txtErr;
+    Button btnOk;
+    boolean wrongNote = false;
+
+    String selectedE, selectedA, selectedD, selectedG, selectedH, selectede;
+    String selectedNoteE, selectedNoteA, selectedNoteD, selectedNoteG, selectedNoteH, selectedNotee;
+    String selectedOctaveE, selectedOctaveA, selectedOctaveD, selectedOctaveG, selectedOctaveH, selectedOctavee;
 
     String tuneKey;
 
     String[] newTune = new String[6];
 
-    String str ="";
+    String str = "";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,35 +49,77 @@ public class NewTuneActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tune);
 
         spE = (Spinner) findViewById(R.id.spStringE);
+        spOE = (Spinner) findViewById(R.id.spOctaveE);
+
         spA = (Spinner) findViewById(R.id.spStringA);
+        spOA = (Spinner) findViewById(R.id.spOctaveA);
+
         spD = (Spinner) findViewById(R.id.spStringD);
+        spOD = (Spinner) findViewById(R.id.spOctaveD);
+
         spG = (Spinner) findViewById(R.id.spStringG);
+        spOG = (Spinner) findViewById(R.id.spOctaveG);
+
         spH = (Spinner) findViewById(R.id.spStringH);
+        spOH = (Spinner) findViewById(R.id.spOctaveH);
+
         spe = (Spinner) findViewById(R.id.spStringe);
+        spOe = (Spinner) findViewById(R.id.spOctavee);
+
 
         btnStartTuning = (Button) findViewById(R.id.btnStartTuning);
         btnSave = (Button) findViewById(R.id.btnSave);
 
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.string_names, android.R.layout.simple_spinner_item);
+                R.array.notes, android.R.layout.simple_spinner_item);
 
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
+
+        ArrayAdapter<CharSequence> adapterOct = ArrayAdapter.createFromResource(this,
+                R.array.octave, android.R.layout.simple_spinner_item);
+        adapterOct.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
         // Apply the adapter to the spinner
         spE.setAdapter(adapter);
+        spOE.setAdapter(adapterOct);
+
         spA.setAdapter(adapter);
+        spOA.setAdapter(adapterOct);
+
         spD.setAdapter(adapter);
+        spOD.setAdapter(adapterOct);
+
         spG.setAdapter(adapter);
+        spOG.setAdapter(adapterOct);
+
         spH.setAdapter(adapter);
+        spOH.setAdapter(adapterOct);
+
         spe.setAdapter(adapter);
+        spOe.setAdapter(adapterOct);
 
         spE.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                selectedE = spE.getItemAtPosition(i).toString();
+                selectedNoteE = spE.getItemAtPosition(i).toString();
+                Toast.makeText(getApplicationContext(), selectedNoteE, Toast.LENGTH_SHORT).show();
             }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        spOE.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                selectedOctaveE = spOE.getItemAtPosition(i).toString();
+
+            }
+
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
 
@@ -76,7 +129,19 @@ public class NewTuneActivity extends AppCompatActivity {
         spA.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                selectedA = spA.getItemAtPosition(i).toString();
+                selectedNoteA = spA.getItemAtPosition(i).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        spOA.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                selectedOctaveA = spOA.getItemAtPosition(i).toString();
+
             }
 
             @Override
@@ -88,7 +153,19 @@ public class NewTuneActivity extends AppCompatActivity {
         spD.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                selectedD = spD.getItemAtPosition(i).toString();
+                selectedNoteD = spD.getItemAtPosition(i).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        spOD.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                selectedOctaveD = spOD.getItemAtPosition(i).toString();
+
             }
 
             @Override
@@ -100,7 +177,19 @@ public class NewTuneActivity extends AppCompatActivity {
         spG.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                selectedG = spG.getItemAtPosition(i).toString();
+                selectedNoteG = spG.getItemAtPosition(i).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        spOG.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                selectedOctaveG = spOG.getItemAtPosition(i).toString();
+
             }
 
             @Override
@@ -112,7 +201,19 @@ public class NewTuneActivity extends AppCompatActivity {
         spH.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                selectedH = spH.getItemAtPosition(i).toString();
+                selectedNoteH = spH.getItemAtPosition(i).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        spOH.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                selectedOctaveH = spOH.getItemAtPosition(i).toString();
+
             }
 
             @Override
@@ -124,7 +225,19 @@ public class NewTuneActivity extends AppCompatActivity {
         spe.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                selectede = spe.getItemAtPosition(i).toString();
+                selectedNotee = spe.getItemAtPosition(i).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        spOe.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                selectedOctavee = spOe.getItemAtPosition(i).toString();
+
             }
 
             @Override
@@ -134,11 +247,12 @@ public class NewTuneActivity extends AppCompatActivity {
         });
 
 
-
         btnSave.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+            @Override
+            public void onClick(View view) {
+                getStrings();
 
+                if (!wrongNote) {
                     dialogSave = new Dialog(NewTuneActivity.this);
                     dialogSave.setContentView(R.layout.dialog_tune_name);
                     dialogSave.show();
@@ -147,64 +261,103 @@ public class NewTuneActivity extends AppCompatActivity {
                     btnDialogSave = dialogSave.findViewById(R.id.btnDialogSave);
 
 
+                    btnDialogSave.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            tuneKey = edtKey.getText().toString().trim();
 
-                   btnDialogSave.setOnClickListener(new View.OnClickListener() {
-                       @Override
-                       public void onClick(View view) {
-                           tuneKey = edtKey.getText().toString().trim();
 
-                           getStrings();
-                           doSave(tuneKey,newTune);
+                            doSave(tuneKey, newTune);
 
-                           Intent i4 = new Intent(NewTuneActivity.this, SavedTunesActivity.class);
-                           startActivity(i4);
-                       }
-                   });
+                            dialogSave.dismiss();
+
+                            Intent i4 = new Intent(NewTuneActivity.this, SavedTunesActivity.class);
+                            startActivity(i4);
+
+                        }
+                    });
                 }
-            });
+            }
+        });
 
 
         btnStartTuning.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                /*
+                getStrings();
+                for(int i = 0; i<6; i++){
+                    Toast.makeText(getApplicationContext(), newTune[i], Toast.LENGTH_SHORT).show();
+                }
+                */
                 getStrings();
 
-                Intent i3 = new Intent(NewTuneActivity.this,NowTuningActivity.class);
-                i3.putExtra("Tune", newTune);
+                if (!wrongNote) {
 
-                startActivity(i3);
+                    Intent i3 = new Intent(NewTuneActivity.this, NowTuningActivity.class);
+                    i3.putExtra("Tune", newTune);
+
+                    startActivity(i3);
+                }
 
             }
         });
 
     }
 
-    public void getStrings(){
+    public void getStrings() {
 
-        newTune[0] = selectedE;
-        newTune[1] = selectedA;
-        newTune[2] = selectedD;
-        newTune[3] = selectedG;
-        newTune[4] = selectedH;
-        newTune[5] = selectede;
+        newTune[0] = selectedNoteE + selectedOctaveE;
+        newTune[1] = selectedNoteA + selectedOctaveA;
+        newTune[2] = selectedNoteD + selectedOctaveD;
+        newTune[3] = selectedNoteG + selectedOctaveG;
+        newTune[4] = selectedNoteH + selectedOctaveH;
+        newTune[5] = selectedNotee + selectedOctavee;
+
+        for (int i = 0; i < 6; i++) {
+            if (newTune[i].equals("H4") | newTune[i].equals("A4") | newTune[i].equals("G4") | newTune[i].equals("F4") | newTune[i].equals("D2") | newTune[i].equals("C2")) {
+                dialogErr = new Dialog(NewTuneActivity.this);
+                dialogErr.setContentView(R.layout.dialog_err_frequencyrange);
+
+                txtErr = dialogErr.findViewById(R.id.txtError);
+                txtErr.setText("Frequency limit reached! \n You can only tune down to E4 or up to E2 using StageTune.");
+
+
+                wrongNote = true;
+                dialogErr.show();
+
+                btnOk = (Button) dialogErr.findViewById(R.id.btnOk);
+                btnOk.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialogErr.dismiss();
+                        dialogErr.cancel();
+                    }
+                });
+
+
+            } else {
+                wrongNote = false;
+            }
+        }
+
     }
 
-    public void doSave(String key, String[] stringArray ){
+    public void doSave(String key, String[] stringArray) {
 
-        String tuneString="";
+        String tuneString = "";
 
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = sp.edit();
 
         //Array To String
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < stringArray.length; i++){
+        for (int i = 0; i < stringArray.length; i++) {
             sb.append(stringArray[i]).append(" ");
         }
         tuneString = sb.toString();
 
-        editor.putString(key,tuneString);
+        editor.putString(key, tuneString);
         editor.apply();
 
     }
