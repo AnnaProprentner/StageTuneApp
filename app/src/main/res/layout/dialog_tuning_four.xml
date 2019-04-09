@@ -22,7 +22,7 @@
         android:layout_alignParentLeft="true"
 
         android:layout_alignParentTop="true"
-        app:cardBackgroundColor="#97A4AE"
+        app:cardBackgroundColor="#ffffff"
         app:cardCornerRadius="15dp">
 
         <LinearLayout

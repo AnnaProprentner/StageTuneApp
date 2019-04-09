@@ -4,18 +4,16 @@ import android.app.Dialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -48,8 +46,6 @@ public class NowTuningActivity extends AppCompatActivity {
     byte[] readBuffer;
     int readBufferPosition;
 
-    EditText edtSend, edtReceive;
-
     Button btnStart;
     Spinner spStringSelect;
 
@@ -62,8 +58,6 @@ public class NowTuningActivity extends AppCompatActivity {
 
     String str = "";
     String s = "";
-
-    boolean firstSend = true;
 
     //Popup Window
     Dialog epicDialog;
@@ -86,9 +80,6 @@ public class NowTuningActivity extends AppCompatActivity {
             Tune = getIntent().getExtras().getStringArray("Tune");
         }
 
-        // edtSend = (EditText) findViewById(R.id.edtSend);
-        // edtReceive = (EditText) findViewById(R.id.edtReceive);
-
         btnStart = (Button) findViewById(R.id.btnStart);
         spStringSelect = (Spinner) findViewById(R.id.spStringSelect);
 
@@ -99,8 +90,7 @@ public class NowTuningActivity extends AppCompatActivity {
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
         if (bluetoothAdapter == null) {
-            Toast.makeText(getApplicationContext(), "Device does not " +
-                    "support Bluetooth", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), R.string.noSupport, Toast.LENGTH_SHORT).show();
         }
 
         if (!bluetoothAdapter.isEnabled()) {
@@ -116,10 +106,11 @@ public class NowTuningActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+
                 if (bluetoothAdapter.isEnabled()) {
+
                     ConnectESP();
                 } else {
-                    //Toast.makeText(getApplicationContext(), "Please enable bluetooth first!",Toast.LENGTH_SHORT).show();
                     showBluetoothEnable();
                     return;
                 }
@@ -130,7 +121,7 @@ public class NowTuningActivity extends AppCompatActivity {
                     return;
                 }
 
-                // String you want to Tune
+                // String you want to tune
                 selectedString = spStringSelect.getSelectedItem().toString();
 
 
@@ -141,27 +132,22 @@ public class NowTuningActivity extends AppCompatActivity {
                     s = Tune[1];
 
                 } else if (selectedString.equals("D")) {
-                    // SendString("D;");
                     s = Tune[2];
 
                 } else if (selectedString.equals("G")) {
-                    //SendString("G;");
                     s = Tune[3];
 
                 } else if (selectedString.equals("H")) {
-                    //SendString("H;");
                     s = Tune[4];
 
                 } else if (selectedString.equals("e")) {
-                    //SendString("e;");
                     s = Tune[5];
 
                 }
 
-                SendString(convertToFrequency(s)); //sends required Frequency as string
+                SendString(convertToFrequency(s)); //sends required frequency as string
 
                 ShowPopupWindowOne();
-
             }
         });
 
@@ -181,18 +167,20 @@ public class NowTuningActivity extends AppCompatActivity {
     }
 
     public void showBluetoothEnable() {
+        //requestDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         requestDialog.setContentView(R.layout.dialog_enable_bluetooth);
+
         btnAllow = (Button) requestDialog.findViewById(R.id.btnAllow);
         btnCancel = (Button) requestDialog.findViewById(R.id.btnCancel);
 
         btnAllow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 BluetoothAdapter.getDefaultAdapter().enable();
 
                 bluetoothEnabled = true;
                 requestDialog.dismiss();
+                requestDialog.cancel();
             }
         });
 
@@ -200,12 +188,12 @@ public class NowTuningActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 requestDialog.dismiss();
+                requestDialog.cancel();
             }
         });
 
         requestDialog.setCanceledOnTouchOutside(false);
         requestDialog.show();
-
     }
 
     public void ShowPopupWindowOne() {
@@ -218,38 +206,31 @@ public class NowTuningActivity extends AppCompatActivity {
         btnReadyPopup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //epicDialog.dismiss();
                 ShowPopupWindowTwo();
             }
         });
 
         epicDialog.setCanceledOnTouchOutside(false);
-
         epicDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         epicDialog.show();
-
     }
 
     public void ShowPopupWindowTwo() {
         epicDialog.setContentView(R.layout.dialog_tuning_two);
 
         txtStringToTune = (TextView) epicDialog.findViewById(R.id.txtStringToTune);
-
         txtStringToTune.setText(selectedString);
 
         epicDialog.setCanceledOnTouchOutside(false);
 
         epicDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         epicDialog.show();
-
-
     }
 
     public void ShowPopupWindowThree() {
         epicDialog.setContentView(R.layout.dialog_tuning_three);
 
         imgClosePopupTuning = (ImageView) epicDialog.findViewById(R.id.imgClosePopupTuning);
-
 
         imgClosePopupTuning.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -260,8 +241,8 @@ public class NowTuningActivity extends AppCompatActivity {
         });
 
         epicDialog.setCanceledOnTouchOutside(false);
-
         epicDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
         epicDialog.show();
     }
 
@@ -272,31 +253,26 @@ public class NowTuningActivity extends AppCompatActivity {
 
         txtStringToTune.setText(selectedString);
 
-
         epicDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         epicDialog.show();
-
-
     }
 
     public void ConnectESP() {
+
         pairedDevices = bluetoothAdapter.getBondedDevices();
 
         if (pairedDevices.isEmpty()) {
-            Toast.makeText(getApplicationContext(), "Please pair the " +
-                    "device first.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),R.string.pairDevice , Toast.LENGTH_SHORT).show();
         } else {
             for (BluetoothDevice iterator : pairedDevices) {
                 if (iterator.getAddress().equals("30:AE:A4:75:5B:1E")) {
-                    device = iterator; //device is an object of type BluetoothDevice
+                    device = iterator;
                     found = true;
                     break;
                 }
             }
             if (!found) {
-                Toast.makeText(getApplicationContext(), "StageTune could not be found.\n" +
-                        "Please check if the tuner is " +
-                        "paired with your phone.", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),R.string.notFound, Toast.LENGTH_LONG).show();
                 pairedDevices = null;
                 return;
             }
@@ -311,11 +287,10 @@ public class NowTuningActivity extends AppCompatActivity {
             try {
                 btSocket.connect();
                 connected = true;
-                Toast.makeText(getApplicationContext(), "Now Connected!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), R.string.connected, Toast.LENGTH_LONG).show();
             } catch (IOException e) {
                 connected = false;
-                Toast.makeText(getApplicationContext(), "Connection failed.\n" +
-                        "Please make sure the tuner is switched on and in range.", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), R.string.connectionFailed, Toast.LENGTH_LONG).show();
                 btSocket = null;
                 return;
             }
@@ -325,8 +300,6 @@ public class NowTuningActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-
-
     }
 
     public void SendString(String s) {
@@ -363,7 +336,7 @@ public class NowTuningActivity extends AppCompatActivity {
                                 if (b == delimiter) {
                                     byte[] encodedBytes = new byte[readBufferPosition];
 
-                                    System.arraycopy(readBuffer, 0, encodedBytes, 0, encodedBytes.length); //saves encodedBytes array to readBuffer array
+                                    System.arraycopy(readBuffer, 0, encodedBytes, 0, encodedBytes.length);
                                     final String data = new String(encodedBytes, "US-ASCII");
 
                                     receivedString = data;
@@ -373,7 +346,7 @@ public class NowTuningActivity extends AppCompatActivity {
                                         @Override
                                         public void run() {
                                             receivedString = data.trim();
-                                            Toast.makeText(getApplicationContext(), receivedString,Toast.LENGTH_SHORT).show();
+                                            //Toast.makeText(getApplicationContext(), receivedString, Toast.LENGTH_SHORT).show();
 
                                             if (receivedString.equals("close")) {
                                                 epicDialog.dismiss();
@@ -403,13 +376,9 @@ public class NowTuningActivity extends AppCompatActivity {
                         stopThread = true;
                     }
                 }
-
             }
         });
-
         workerThread.start();
-        // return receivedDataBT[1];
-
     }
 
     public String convertToFrequency(String string) {
@@ -419,56 +388,34 @@ public class NowTuningActivity extends AppCompatActivity {
             ret = "82.64;";
         } else if (string.equals("F2")) {
             ret = "92.50;";
-        }else if (string.equals("G2")) {
+        } else if (string.equals("G2")) {
             ret = "98.00;";
-        }else if (string.equals("A2")) {
+        } else if (string.equals("A2")) {
             ret = "110.00;";
-        }else if (string.equals("H2")) {
+        } else if (string.equals("H2")) {
             ret = "123.47;";
-        }else if (string.equals("C3")) {
+        } else if (string.equals("C3")) {
             ret = "130.81;";
-        }else if (string.equals("D3")) {
+        } else if (string.equals("D3")) {
             ret = "146.83;";
-        }else if (string.equals("E3")) {
+        } else if (string.equals("E3")) {
             ret = "164.81;";
-        }else if (string.equals("F3")) {
+        } else if (string.equals("F3")) {
             ret = "174,61;";
-        }else if (string.equals("G3")) {
+        } else if (string.equals("G3")) {
             ret = "196.00;";
-        }else if (string.equals("A3")) {
+        } else if (string.equals("A3")) {
             ret = "220.00;";
-        }else if (string.equals("H3")) {
+        } else if (string.equals("H3")) {
             ret = "246.94;";
-        }else if (string.equals("C4")) {
+        } else if (string.equals("C4")) {
             ret = "261.63;";
-        }else if (string.equals("D4")) {
+        } else if (string.equals("D4")) {
             ret = "293.67;";
-        }else if (string.equals("E4")) {
+        } else if (string.equals("E4")) {
             ret = "329.63;";
         }
         return ret;
-    }
-
-    public String[] doLoad(String key) {
-
-
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-
-        String str = sp.getString(key, "DEFAULT");
-
-        String[] stringArray = str.split(":");
-
-        return stringArray;
-
-
-    }
-
-    public void doDelete(String key) {
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-        SharedPreferences.Editor editor = sp.edit();
-
-        editor.remove(key);
-        editor.apply();
     }
 
 }

@@ -8,13 +8,13 @@ import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class NewTuneActivity extends AppCompatActivity {
 
@@ -33,15 +33,12 @@ public class NewTuneActivity extends AppCompatActivity {
     Button btnOk;
     boolean wrongNote = false;
 
-    String selectedE, selectedA, selectedD, selectedG, selectedH, selectede;
     String selectedNoteE, selectedNoteA, selectedNoteD, selectedNoteG, selectedNoteH, selectedNotee;
     String selectedOctaveE, selectedOctaveA, selectedOctaveD, selectedOctaveG, selectedOctaveH, selectedOctavee;
 
     String tuneKey;
 
     String[] newTune = new String[6];
-
-    String str = "";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,19 +67,16 @@ public class NewTuneActivity extends AppCompatActivity {
         btnStartTuning = (Button) findViewById(R.id.btnStartTuning);
         btnSave = (Button) findViewById(R.id.btnSave);
 
-        // Create an ArrayAdapter using the string array and a default spinner layout
+
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.notes, android.R.layout.simple_spinner_item);
 
-        // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
 
         ArrayAdapter<CharSequence> adapterOct = ArrayAdapter.createFromResource(this,
                 R.array.octave, android.R.layout.simple_spinner_item);
         adapterOct.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        // Apply the adapter to the spinner
         spE.setAdapter(adapter);
         spOE.setAdapter(adapterOct);
 
@@ -105,7 +99,7 @@ public class NewTuneActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 selectedNoteE = spE.getItemAtPosition(i).toString();
-                Toast.makeText(getApplicationContext(), selectedNoteE, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), selectedNoteE, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -254,6 +248,7 @@ public class NewTuneActivity extends AppCompatActivity {
 
                 if (!wrongNote) {
                     dialogSave = new Dialog(NewTuneActivity.this);
+                    dialogSave.requestWindowFeature(Window.FEATURE_NO_TITLE);
                     dialogSave.setContentView(R.layout.dialog_tune_name);
                     dialogSave.show();
 
@@ -276,6 +271,24 @@ public class NewTuneActivity extends AppCompatActivity {
 
                         }
                     });
+                } else if (wrongNote) {
+                    dialogErr = new Dialog(NewTuneActivity.this);
+                    dialogErr.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                    dialogErr.setContentView(R.layout.dialog_err_frequencyrange);
+
+                    txtErr = dialogErr.findViewById(R.id.txtError);
+                    txtErr.setText(R.string.frequencyBorder);
+
+                    btnOk = (Button) dialogErr.findViewById(R.id.btnOk);
+
+                    btnOk.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            dialogErr.dismiss();
+                        }
+                    });
+
+                    dialogErr.show();
                 }
             }
         });
@@ -284,12 +297,6 @@ public class NewTuneActivity extends AppCompatActivity {
         btnStartTuning.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*
-                getStrings();
-                for(int i = 0; i<6; i++){
-                    Toast.makeText(getApplicationContext(), newTune[i], Toast.LENGTH_SHORT).show();
-                }
-                */
                 getStrings();
 
                 if (!wrongNote) {
@@ -298,11 +305,27 @@ public class NewTuneActivity extends AppCompatActivity {
                     i3.putExtra("Tune", newTune);
 
                     startActivity(i3);
-                }
+                } else if (wrongNote) {
+                    dialogErr = new Dialog(NewTuneActivity.this);
+                    dialogErr.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                    dialogErr.setContentView(R.layout.dialog_err_frequencyrange);
 
+                    txtErr = dialogErr.findViewById(R.id.txtError);
+                    txtErr.setText(R.string.frequencyBorder);
+
+                    btnOk = (Button) dialogErr.findViewById(R.id.btnOk);
+
+                    btnOk.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            dialogErr.dismiss();
+                        }
+                    });
+
+                    dialogErr.show();
+                }
             }
         });
-
     }
 
     public void getStrings() {
@@ -316,41 +339,19 @@ public class NewTuneActivity extends AppCompatActivity {
 
         for (int i = 0; i < 6; i++) {
             if (newTune[i].equals("H4") | newTune[i].equals("A4") | newTune[i].equals("G4") | newTune[i].equals("F4") | newTune[i].equals("D2") | newTune[i].equals("C2")) {
-                dialogErr = new Dialog(NewTuneActivity.this);
-                dialogErr.setContentView(R.layout.dialog_err_frequencyrange);
-
-                txtErr = dialogErr.findViewById(R.id.txtError);
-                txtErr.setText("Frequency limit reached! \n You can only tune down to E4 or up to E2 using StageTune.");
-
-
                 wrongNote = true;
-                dialogErr.show();
-
-                btnOk = (Button) dialogErr.findViewById(R.id.btnOk);
-                btnOk.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        dialogErr.dismiss();
-                        dialogErr.cancel();
-                    }
-                });
-
-
             } else {
                 wrongNote = false;
             }
         }
-
     }
 
     public void doSave(String key, String[] stringArray) {
-
         String tuneString = "";
 
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = sp.edit();
 
-        //Array To String
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < stringArray.length; i++) {
             sb.append(stringArray[i]).append(" ");
@@ -359,8 +360,6 @@ public class NewTuneActivity extends AppCompatActivity {
 
         editor.putString(key, tuneString);
         editor.apply();
-
     }
-
 }
 

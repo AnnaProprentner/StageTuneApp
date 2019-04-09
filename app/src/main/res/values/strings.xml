@@ -1,6 +1,13 @@
 <resources>
     <string name="app_name">StageTune</string>
 
+    <string name="pairDevice">Please pair the device first.</string>
+    <string name="notFound">StageTune could not be found.\nPlease check if the tuner is paired with your phone.</string>
+    <string name="noSupport">Device does not support Bluetooth"</string>
+    <string name="frequencyBorder">Frequency limit reached! \n You can only tune down to E4 or up to E2 using StageTune.</string>
+    <string name="connected">Now Connected!</string>
+    <string name="connectionFailed">Connection failed.\nPlease make sure the tuner is switched on and in range.</string>
+
     <string-array name="string_names">
         <item>E</item>
         <item>A</item>
@@ -25,5 +32,4 @@
         <item>3</item>
         <item>4</item>
     </string-array>
-
 </resources>

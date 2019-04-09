@@ -7,9 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -28,21 +26,17 @@ public class GridViewAdapter extends BaseAdapter {
     Dialog epicDialog;
     Activity myActivity;
 
-    //Popup Window
-
+    //Dialog
     Button btnStartTuning;
-    ImageView imgClosePopup,imgDelete;
+    ImageView imgClosePopup, imgDelete;
     TextView txtSelectedTune, txtTuneName;
 
 
-
-   public GridViewAdapter(List<String> sourceList, Context myContext, Dialog epicDialog, Activity myActivity){
+    public GridViewAdapter(List<String> sourceList, Context myContext, Dialog epicDialog, Activity myActivity) {
         this.sourceList = sourceList;
         this.myContext = myContext;
         this.epicDialog = epicDialog;
         this.myActivity = myActivity;
-
-
     }
 
     @Override
@@ -64,14 +58,12 @@ public class GridViewAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         final Button button;
 
-
-
-        if(convertView == null){
+        if (convertView == null) {
             button = new Button(myContext);
 
-            button.setLayoutParams(new GridView.LayoutParams(522,522));
+            button.setLayoutParams(new GridView.LayoutParams(522, 522));
 
-            button.setPadding(5,5,5,5);
+            button.setPadding(5, 5, 5, 5);
             button.setText(sourceList.get(position));
 
             button.setOnClickListener(new View.OnClickListener() {
@@ -80,38 +72,27 @@ public class GridViewAdapter extends BaseAdapter {
 
                     String tuneName = button.getText().toString();
 
-                    String selectedTune = doLoad(tuneName,myContext);
+                    String selectedTune = doLoad(tuneName, myContext);
 
-
-                    showPopUpWindow(selectedTune,tuneName);
-
-
-
-                    //String toast = doLoad(button.getText().toString(), myContext);
-                    //Toast.makeText(myContext,toast,Toast.LENGTH_SHORT).show();
+                    showPopUpWindow(selectedTune, tuneName);
 
                 }
             });
-        }else{
-            button = (Button)convertView;
-
-
+        } else {
+            button = (Button) convertView;
         }
         return button;
     }
 
-    public String doLoad(String key, Context myContext){
+    public String doLoad(String key, Context myContext) {
 
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(myContext);
         String str = sp.getString(key, "EMPTY");
 
-        // String[] stringArray = str.split(":");
-
         return str;
-
     }
 
-    public void showPopUpWindow(final String selectedTune, final String tuneName){
+    public void showPopUpWindow(final String selectedTune, final String tuneName) {
 
         epicDialog.setContentView(R.layout.popup_window_saved_tunes);
 
@@ -128,9 +109,9 @@ public class GridViewAdapter extends BaseAdapter {
         imgDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(myContext,tuneName + " was deleted.",Toast.LENGTH_SHORT).show();
+                Toast.makeText(myContext, tuneName + " was deleted.", Toast.LENGTH_SHORT).show();
 
-                SharedPreferences sp =PreferenceManager.getDefaultSharedPreferences(myContext);
+                SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(myContext);
                 SharedPreferences.Editor editor = sp.edit();
 
                 editor.remove(tuneName);
@@ -144,15 +125,9 @@ public class GridViewAdapter extends BaseAdapter {
 
                 String[] selectedTuneArray = selectedTuneToArray(selectedTune);
 
-                /*
-                for (int i = 0; i < selectedTuneArray.length; i++){
-                    Toast.makeText(myContext,selectedTuneArray[i],Toast.LENGTH_SHORT).show();
-                }
-                */
-
-               Intent i5 = new Intent(myActivity, NowTuningActivity.class);
-               i5.putExtra("Tune", selectedTuneArray);
-               myActivity.startActivity(i5);
+                Intent i5 = new Intent(myActivity, NowTuningActivity.class);
+                i5.putExtra("Tune", selectedTuneArray);
+                myActivity.startActivity(i5);
             }
         });
 
@@ -163,16 +138,13 @@ public class GridViewAdapter extends BaseAdapter {
             }
         });
 
-
-
         epicDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         epicDialog.show();
-
     }
 
-    public String[] selectedTuneToArray(String selectedTune){
+    public String[] selectedTuneToArray(String selectedTune) {
         String[] selectedTuneArray = selectedTune.split(" ");
-        return  selectedTuneArray;
+        return selectedTuneArray;
     }
 
 }

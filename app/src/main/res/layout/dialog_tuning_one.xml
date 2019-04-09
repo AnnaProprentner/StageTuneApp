@@ -25,7 +25,7 @@
         android:layout_alignParentLeft="true"
 
         android:layout_alignParentTop="true"
-        app:cardBackgroundColor="#97a4ae"
+        app:cardBackgroundColor="#ffffff"
         app:cardCornerRadius="15dp"
 
         >

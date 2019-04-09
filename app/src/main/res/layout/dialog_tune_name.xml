@@ -1,50 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-
-
-    >
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-
         android:layout_margin="20dp"
-        >
+
+        android:orientation="vertical">
 
         <TextView
-
-            android:fontFamily="@font/gill_sans_mt_regular"
-            android:textSize="30dp"
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
             android:layout_gravity="center_horizontal"
-            android:textAlignment="center"
             android:layout_marginTop="25dp"
 
+            android:fontFamily="@font/gill_sans_mt_regular"
             android:text="Enter tune name:"
+            android:textAlignment="center"
 
-
-            />
+            android:textSize="30dp"/>
 
         <EditText
             android:id="@+id/edtKey"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:inputType="text"
-
             android:layout_marginTop="25dp"
 
             android:fontFamily="@font/gill_sans_mt_regular"
 
-             />
+            android:inputType="text"/>
 
         <Button
             android:id="@+id/btnDialogSave"
@@ -54,11 +44,8 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="15dp"
 
-            android:text="Save"
             android:fontFamily="@font/gill_sans_mt_regular"
-
-
-            />
+            android:text="Save"/>
 
     </LinearLayout>
 
